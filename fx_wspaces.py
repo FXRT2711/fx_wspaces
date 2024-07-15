@@ -55,7 +55,7 @@ except:
     sleep(0.5)
     print("creating config file...")
     os.system(f"mkdir /home/$USER/.config/fx_wspace")
-    os.system(f"cp fx_wspace.conf /home/$USER/.config/fx_wspace/")
+    os.system(f"cp /fx_wspace.conf /home/$USER/.config/fx_wspace/")
     print("config file created...")
     sleep(0.5)
     print("please restart...")
@@ -75,6 +75,10 @@ bg_color_start = "bg_color="
 text_color_start = "text_color="
 main_ws_color_start = "main_ws_color="
 other_ws_volor_start = "other_ws_volor="
+use_hotkey_start = "use_hotkey="
+use_command_start = "use_command="
+command_use = ""
+#
 #
 #
 #
@@ -126,6 +130,38 @@ for i in range(len(conf_list)):
          if other_ws_c == 'tp':
             other_ws_c = 'transparent'
 #
+#
+try:
+    for i in range(len(conf_list)):
+        if conf_list[i].startswith(use_hotkey_start):
+            command_use = "h"
+            uhotkey = conf_list[i]
+            uhotkey = uhotkey.replace(use_hotkey_start,'')
+            if "#leave the ws number blank" in uhotkey:
+                uhotkey = uhotkey.replace('#leave the ws number blank','')
+#       
+            keys = uhotkey.split()
+            keys_len = len(keys)
+            keys = str(keys)
+            keys = keys.replace(']','')
+            keys = keys.replace('[','')
+#
+            print (keys)
+            print (keys_len)
+except:
+    pass
+#
+try:
+    for i in range(len(conf_list)):
+        if conf_list[i].startswith(use_command_start):
+            command_use = "c"
+            ucommand = conf_list[i]
+            ucommand = ucommand.replace(use_command_start,'')
+            if "#leave the ws number blank" in ucommand:
+                ucommand = ucommand.replace('#leave the ws number blank','')
+except:
+    pass
+#
 print(theme)
 print(x)
 print(y)
@@ -134,6 +170,12 @@ print(bg_c)
 print(text_c)
 print(main_ws_c)
 print(other_ws_c)
+print(command_use)
+#
+if command_use == "h":
+    print(uhotkey)
+if command_use == "c":
+    print(ucommand)
 #
 ctk.set_appearance_mode(theme)
 ctk.set_default_color_theme("dark-blue")
@@ -154,14 +196,35 @@ class App(ctk.CTk):
         self.geometry(f"{int(x)}x{int(y)}")
 #
         def go_to_f():
-            pyautogui.hotkey('win',f"{cws}")
+            if command_use == "h":
+                if keys_len == 1:
+                    pyautogui.hotkey(uhotkey,f"{cws}")
+                else:
+                    pyautogui.hotkey(keys,f"{cws}")
+#
+            elif command_use == "c":
+                os.system(f"{ucommand} {cws}")
             exit()
 #
         def go_to_s():
-            pyautogui.hotkey('win',f"{cws + 1}")
+            if command_use == "h":
+                if keys_len == 1:
+                    pyautogui.hotkey(uhotkey,f"{cws + 1}")
+                else:
+                    pyautogui.hotkey(keys,f"{cws + 1}")
+#
+            elif command_use == "c":
+                os.system(f"{ucommand} {cws + 1}")
 #            
         def go_to_t():
-            pyautogui.hotkey('win',f"{cws + 2}")
+            if command_use == "h":
+                if keys_len == 1:
+                    pyautogui.hotkey(uhotkey,f"{cws + 2}")
+                else:
+                    pyautogui.hotkey(keys,f"{cws + 2}")
+#
+            elif command_use == "c":
+                os.system(f"{ucommand} {cws + 2}")
             exit()
 #       
         self.nothing = ctk.CTkLabel(self,text="")
