@@ -11,6 +11,7 @@ tool on workspace 1
 tool on workspace 2
 ![2024-07-15-064443_1366x768_scrot](https://github.com/user-attachments/assets/8db59dfc-b7ff-471d-b03a-7a28156195b7)
 
+# !!is more stable if you use 'use_hotkey=' on fx_wspaces.conf!!
 # if you have a tilling wm like i3 follow these steps: exaple on i3
 
 #you can change the: $mod+Shift+w
