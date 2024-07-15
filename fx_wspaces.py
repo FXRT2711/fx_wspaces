@@ -55,7 +55,7 @@ except:
     sleep(0.5)
     print("creating config file...")
     os.system(f"mkdir /home/$USER/.config/fx_wspace")
-    os.system(f"touch /home/$USER/.config/fx_wspace/fx_wspace.conf")
+    os.system(f"cp /fx_wspace.conf /home/$USER/.config/fx_wspace/")
     print("config file created...")
     sleep(0.5)
     print("please restart...")
